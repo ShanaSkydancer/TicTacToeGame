@@ -1,0 +1,15 @@
+{
+  "name": "TicTacToe_Game",
+  "version": "1.0.0",
+  "description": "A TicTacToe Game.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ShanaSkydancer <shanaskydancer@protonmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "mocha": "^5.0.1"
+  }
+}
