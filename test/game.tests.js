@@ -17,5 +17,6 @@ describe('TicTacToe', function () {
         ===+===+===
          O | X | X 
         `);
+        
     });
 });
