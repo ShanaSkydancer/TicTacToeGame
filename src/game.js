@@ -82,114 +82,135 @@ var O = 'O';
 var players = [X, O];
 var currentTurn = X;
 
-function computer () {
-  x = getPatternOne()
+function computer() {
+  var x = getPatternOne();
+
   if (x == -1) {
-    x = getPatternTwo()
+    x = getPatternTwo();
     if (x == -1) {
-      x = getMove()
+      x = getMove();
     }
   }
-  move(x, O)
+
+  move(x, O);
 };
 
-function move (position, x) {
+function move(position, x) {
   if (x != currentTurn) {
-    return false
+    return false;
   }
+
   if (+position >= 0 && +position <= 8 && !isNaN(+position) && board[+position] == ' ') {
-    board.splice(+position, 1, x)
-    currentTurn = (x == X) ? O : X
-    return true
+    board.splice(+position, 1, x);
+    currentTurn = (x == X) ? O : X;
+    return true;
   }
-  return false
+
+  return false;
 };
 
-function boardDisplay () {
+function boardDisplay() {
   return ' ' + board[0] + ' |' + ' ' + board[1] + ' |' + ' ' + board[2] + '\n===+===+===\n' + ' ' + board[3] + ' |' + ' ' + board[4] + ' |' + ' ' + board[5] + '\n===+===+===\n' + ' ' + board[6] + ' |' + ' ' + board[7] + ' |' + ' ' + board[8]
 };
 
-function show () {
-  console.log(boardDisplay());
-}
-
- function filledBoard () {
+ function filledBoard() {
   x = getMove()
   if (x == -1) {
-    show()
-    console.log('Game over')
     return true
   }
   return false
 };
 
-function winner () {
-  boardString = board.join('')
-  theWinner = null
+function winner() {
+  var boardString = board.join('');
+  var theWinner = null;
+
   for (i = 0; i < patternsThree.length; i++) {
-    array = boardString.match(patternsThree[i][0])
+    array = boardString.match(patternsThree[i][0]);
     if (array) {
-      theWinner = patternsThree[i][1]
+      theWinner = patternsThree[i][1];
     }
   }
+
   if (theWinner) {
-    show()
-    console.log('Game over')
-    return true
+    return true;
   }
-  return false
+
+  return false;
 };
 
-function getPatternOne () {
-  boardString = board.join('')
+function getPatternOne() {
+  var boardString = board.join('');
+
   for (i = 0; i < patternsOne.length; i++) {
-    array = boardString.match(patternsOne[i][0])
+    var array = boardString.match(patternsOne[i][0]);
     if (array) {
-      return patternsOne[i][1]
+      return patternsOne[i][1];
     }
   }
-  return -1
+
+  return -1;
 };
 
- function getPatternTwo () {
-  boardString = board.join('')
+ function getPatternTwo() {
+  var boardString = board.join('');
+
   for (i = 0; i < patternsTwo.length; i++) {
-    array = boardString.match(patternsTwo[i][0])
+    var array = boardString.match(patternsTwo[i][0]);
     if (array) {
-      return patternsTwo[i][1]
+      return patternsTwo[i][1];
     }
   }
-  return -1
+
+  return -1;
 };
 
-function getMove () {
+function getMove() {
   if (board[4] == ' ') {
-    return 4
+    return 4;
   }
-  return board.indexOf(' ')
+
+  return board.indexOf(' ');
 };
 
-function exit () {
-  process.exit()
+function exit() {
+  process.exit();
 };
 
-function play () {
-  show()
-  console.log("Enter [0-8]:")
-  process.openStdin().on('data', function (res) {
-    if (move(res, X)) {
-      if (winner() || filledBoard()) {
-        exit()
-      } else {
-        computer()
-        if (winner() || filledBoard()) {
-          exit()
-        } else {
-          show()
-        }
+function play(input) {
+    if (move(input, X)) {
+      if (winner()) {
+        return boardDisplay() + "\n" + X + " has won the game.";
+      } 
+      
+      if (filledBoard()) {
+        return boardDisplay() + "\nDraw!";
       }
-    }
+
+      return computerMove();
+  }
+};
+
+function computerMove() {
+  computer();
+
+  if (winner()) {
+    return boardDisplay() + "\n" + O + " has won the game.";
+  } 
+  
+  if (filledBoard()) {
+    return boardDisplay() + "\nDraw!";
+  }
+
+  return boardDisplay();
+}
+
+function prompt() {
+  console.log(boardDisplay());
+  console.log("Enter [0-8]:");
+  process.openStdin().on('data', function (result) {
+    console.log(play(result));
   })
 };
 
-play();
+prompt();
