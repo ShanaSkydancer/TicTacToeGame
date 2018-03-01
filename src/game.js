@@ -1,4 +1,4 @@
-patterns_1 = [
+var patternsOne = [
   [(/ OO....../), 0],
   [(/O..O.. ../), 6],
   [(/......OO /), 8],
@@ -21,7 +21,7 @@ patterns_1 = [
   [(/...OO .../), 5]
 ];
 
-patterns_2 = [
+var patternsTwo = [
   [(/  X . X  /), 1],
   [(/ XX....../), 0],
   [(/X..X.. ../), 6],
@@ -57,7 +57,7 @@ patterns_2 = [
   [(/X  ..X.. /), 2]
 ];
 
-patterns_3 = [
+var patternsThree = [
   [(/OOO....../), 'O'],
   [(/...OOO.../), 'O'],
   [(/......OOO/), 'O'],
@@ -76,45 +76,45 @@ patterns_3 = [
   [(/..X.X.X../), 'X']
 ];
 
-board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-X = 'X';
-O = 'O';
-players = [X, O];
-curr_turn = X;
+var board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+var X = 'X';
+var O = 'O';
+var players = [X, O];
+var currentTurn = X;
 
-comp = function () {
-  x = get_pattern_1_move()
+function computer () {
+  x = getPatternOne()
   if (x == -1) {
-    x = get_pattern_2_move()
+    x = getPatternTwo()
     if (x == -1) {
-      x = get_move()
+      x = getMove()
     }
   }
   move(x, O)
 };
 
-move = function (pos, x) {
-  if (x != curr_turn) {
+function move (position, x) {
+  if (x != currentTurn) {
     return false
   }
-  if (+pos >= 0 && +pos <= 8 && !isNaN(+pos) && board[+pos] == ' ') {
-    board.splice(+pos, 1, x)
-    curr_turn = (x == X) ? O : X
+  if (+position >= 0 && +position <= 8 && !isNaN(+position) && board[+position] == ' ') {
+    board.splice(+position, 1, x)
+    currentTurn = (x == X) ? O : X
     return true
   }
   return false
 };
 
-board_display = function () {
+function boardDisplay () {
   return ' ' + board[0] + ' |' + ' ' + board[1] + ' |' + ' ' + board[2] + '\n===+===+===\n' + ' ' + board[3] + ' |' + ' ' + board[4] + ' |' + ' ' + board[5] + '\n===+===+===\n' + ' ' + board[6] + ' |' + ' ' + board[7] + ' |' + ' ' + board[8]
 };
 
-show = function () {
-  console.log(board_display());
+function show () {
+  console.log(boardDisplay());
 }
 
-board_filled = function () {
-  x = get_move()
+ function filledBoard () {
+  x = getMove()
   if (x == -1) {
     show()
     console.log('Game over')
@@ -123,16 +123,16 @@ board_filled = function () {
   return false
 };
 
-winner = function () {
-  board_string = board.join('')
-  the_winner = null
-  for (i = 0; i < patterns_3.length; i++) {
-    array = board_string.match(patterns_3[i][0])
+function winner () {
+  boardString = board.join('')
+  theWinner = null
+  for (i = 0; i < patternsThree.length; i++) {
+    array = boardString.match(patternsThree[i][0])
     if (array) {
-      the_winner = patterns_3[i][1]
+      theWinner = patternsThree[i][1]
     }
   }
-  if (the_winner) {
+  if (theWinner) {
     show()
     console.log('Game over')
     return true
@@ -140,49 +140,49 @@ winner = function () {
   return false
 };
 
-get_pattern_1_move = function () {
-  board_string = board.join('')
-  for (i = 0; i < patterns_1.length; i++) {
-    array = board_string.match(patterns_1[i][0])
+function getPatternOne () {
+  boardString = board.join('')
+  for (i = 0; i < patternsOne.length; i++) {
+    array = boardString.match(patternsOne[i][0])
     if (array) {
-      return patterns_1[i][1]
+      return patternsOne[i][1]
     }
   }
   return -1
 };
 
-get_pattern_2_move = function () {
-  board_string = board.join('')
-  for (i = 0; i < patterns_2.length; i++) {
-    array = board_string.match(patterns_2[i][0])
+ function getPatternTwo () {
+  boardString = board.join('')
+  for (i = 0; i < patternsTwo.length; i++) {
+    array = boardString.match(patternsTwo[i][0])
     if (array) {
-      return patterns_2[i][1]
+      return patternsTwo[i][1]
     }
   }
   return -1
 };
 
-get_move = function () {
+function getMove () {
   if (board[4] == ' ') {
     return 4
   }
   return board.indexOf(' ')
 };
 
-exit = function () {
+function exit () {
   process.exit()
 };
 
-play = function () {
+function play () {
   show()
   console.log("Enter [0-8]:")
   process.openStdin().on('data', function (res) {
     if (move(res, X)) {
-      if (winner() || board_filled()) {
+      if (winner() || filledBoard()) {
         exit()
       } else {
-        comp()
-        if (winner() || board_filled()) {
+        computer()
+        if (winner() || filledBoard()) {
           exit()
         } else {
           show()
