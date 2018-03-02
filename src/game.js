@@ -1,12 +1,7 @@
 const WinningConditions = require('../src/WinningConditions');
 const OPatterns = require('../src/OPatterns');
 const XPatterns = require('../src/XPatterns');
-
-var board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
-var X = 'X';
-var O = 'O';
-var players = [X, O];
-var currentTurn = X;
+const TicTacToe = require('../src/TicTacToe');
 
 function computer() {
   var x = getPatternOne();
@@ -22,6 +17,9 @@ function computer() {
 };
 
 function move(position, x) {
+  var ticTacToe = new TicTacToe();
+  var board = ticTacToe.board;
+
   if (x != currentTurn) {
     return false;
   }
@@ -36,6 +34,8 @@ function move(position, x) {
 };
 
 function boardDisplay() {
+  var ticTacToe = new TicTacToe();
+  var board = ticTacToe.board;
   return ' ' + board[0] + ' |' + ' ' + board[1] + ' |' + ' ' + board[2] + '\n===+===+===\n' + ' ' + board[3] + ' |' + ' ' + board[4] + ' |' + ' ' + board[5] + '\n===+===+===\n' + ' ' + board[6] + ' |' + ' ' + board[7] + ' |' + ' ' + board[8]
 };
 
@@ -49,6 +49,8 @@ function boardDisplay() {
 
 function winner() {
   var winningConditions = new WinningConditions();
+  var ticTacToe = new TicTacToe();
+  var board = ticTacToe.board;
 
   var boardString = board.join('');
   var theWinner = null;
@@ -69,6 +71,8 @@ function winner() {
 };
 
 function getPatternOne() {
+  var ticTacToe = new TicTacToe();
+  var board = ticTacToe.board;
   var boardString = board.join('');
   var oPatterns = new OPatterns;
   var currentPattern = oPatterns.sequence;
@@ -84,6 +88,8 @@ function getPatternOne() {
 };
 
  function getPatternTwo() {
+  var ticTacToe = new TicTacToe();
+  var board = ticTacToe.board;
   var boardString = board.join('');
   var xPatterns = new XPatterns();
   var currentPattern = xPatterns.sequence;
@@ -99,6 +105,8 @@ function getPatternOne() {
 };
 
 function getMove() {
+  var ticTacToe = new TicTacToe();
+  var board = ticTacToe.board;
   if (board[4] == ' ') {
     return 4;
   }
