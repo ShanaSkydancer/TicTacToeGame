@@ -1,41 +1,6 @@
 const WinningConditions = require('../src/WinningConditions');
 const OPatterns = require('../src/OPatterns');
-
-var patternsTwo = [
-  [(/  X . X  /), 1],
-  [(/ XX....../), 0],
-  [(/X..X.. ../), 6],
-  [(/......XX /), 8],
-  [(/.. ..X..X/), 2],
-  [(/ ..X..X../), 0],
-  [(/...... XX/), 6],
-  [(/..X..X.. /), 8],
-  [(/XX ....../), 2],
-  [(/ ...X...X/), 0],
-  [(/..X.X. ../), 6],
-  [(/X...X... /), 8],
-  [(/.. .X.X../), 2],
-  [(/X X....../), 1],
-  [(/X.. ..X../), 3],
-  [(/......X X/), 7],
-  [(/..X.. ..X/), 5],
-  [(/. ..X..X./), 1],
-  [(/... XX.../), 3],
-  [(/.X..X.. ./), 7],
-  [(/...XX .../), 5],
-  [(/ X X.. ../), 0],
-  [(/ ..X.. X /), 6],
-  [(/.. ..X X /), 8],
-  [(/ X ..X.. /), 2],
-  [(/  XX.. ../), 0],
-  [(/X.. .. X /), 6],
-  [(/.. .XX   /), 8],
-  [(/X  ..X.. /), 2],
-  [(/ X  ..X../), 0],
-  [(/ ..X..  X/), 6],
-  [(/..X..  X /), 8],
-  [(/X  ..X.. /), 2]
-];
+const XPatterns = require('../src/XPatterns');
 
 var board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 var X = 'X';
@@ -109,8 +74,8 @@ function getPatternOne() {
   var currentPattern = oPatterns.sequence;
 
   for (i = 0; i < currentPattern.length; i++) {
-    var array = boardString.match(currentPattern[i][0]);
-    if (array) {
+    var isMatch = boardString.match(currentPattern[i][0]);
+    if (isMatch) {
       return currentPattern[i][1];
     }
   }
@@ -120,11 +85,13 @@ function getPatternOne() {
 
  function getPatternTwo() {
   var boardString = board.join('');
+  var xPatterns = new XPatterns();
+  var currentPattern = xPatterns.sequence;
 
-  for (i = 0; i < patternsTwo.length; i++) {
-    var array = boardString.match(patternsTwo[i][0]);
-    if (array) {
-      return patternsTwo[i][1];
+  for (i = 0; i < currentPattern.length; i++) {
+    var isMatch = boardString.match(currentPattern[i][0]);
+    if (isMatch) {
+      return currentPattern[i][1];
     }
   }
 
