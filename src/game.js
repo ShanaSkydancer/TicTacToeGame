@@ -1,3 +1,5 @@
+const WinningConditions = require('../src/WinningConditions');
+
 var patternsOne = [
   [(/ OO....../), 0],
   [(/O..O.. ../), 6],
@@ -57,25 +59,6 @@ var patternsTwo = [
   [(/X  ..X.. /), 2]
 ];
 
-var patternsThree = [
-  [(/OOO....../), 'O'],
-  [(/...OOO.../), 'O'],
-  [(/......OOO/), 'O'],
-  [(/O..O..O../), 'O'],
-  [(/.O..O..O./), 'O'],
-  [(/..O..O..O/), 'O'],
-  [(/O...O...O/), 'O'],
-  [(/..O.O.O../), 'O'],
-  [(/XXX....../), 'X'],
-  [(/...XXX.../), 'X'],
-  [(/......XXX/), 'X'],
-  [(/X..X..X../), 'X'],
-  [(/.X..X..X./), 'X'],
-  [(/..X..X..X/), 'X'],
-  [(/X...X...X/), 'X'],
-  [(/..X.X.X../), 'X']
-];
-
 var board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
 var X = 'X';
 var O = 'O';
@@ -122,13 +105,16 @@ function boardDisplay() {
 };
 
 function winner() {
+  var winningConditions = new WinningConditions();
+
   var boardString = board.join('');
   var theWinner = null;
+  var currentPosition = winningConditions.patterns;
 
-  for (i = 0; i < patternsThree.length; i++) {
-    array = boardString.match(patternsThree[i][0]);
-    if (array) {
-      theWinner = patternsThree[i][1];
+  for (i = 0; i < currentPosition.length; i++) {
+    var isMatch = boardString.match(currentPosition[i][0]);
+    if (isMatch) {
+      theWinner = currentPosition[i][1];
     }
   }
 
