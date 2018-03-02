@@ -1,27 +1,5 @@
 const WinningConditions = require('../src/WinningConditions');
-
-var patternsOne = [
-  [(/ OO....../), 0],
-  [(/O..O.. ../), 6],
-  [(/......OO /), 8],
-  [(/.. ..O..O/), 2],
-  [(/ ..O..O../), 0],
-  [(/...... OO/), 6],
-  [(/..O..O.. /), 8],
-  [(/OO ....../), 2],
-  [(/ ...O...O/), 0],
-  [(/..O.O. ../), 6],
-  [(/O...O... /), 8],
-  [(/.. .O.O../), 2],
-  [(/O O....../), 1],
-  [(/O.. ..O../), 3],
-  [(/......O O/), 7],
-  [(/..O.. ..O/), 5],
-  [(/. ..O..O./), 1],
-  [(/... OO.../), 3],
-  [(/.O..O.. ./), 7],
-  [(/...OO .../), 5]
-];
+const OPatterns = require('../src/OPatterns');
 
 var patternsTwo = [
   [(/  X . X  /), 1],
@@ -127,11 +105,13 @@ function winner() {
 
 function getPatternOne() {
   var boardString = board.join('');
+  var oPatterns = new OPatterns;
+  var currentPattern = oPatterns.sequence;
 
-  for (i = 0; i < patternsOne.length; i++) {
-    var array = boardString.match(patternsOne[i][0]);
+  for (i = 0; i < currentPattern.length; i++) {
+    var array = boardString.match(currentPattern[i][0]);
     if (array) {
-      return patternsOne[i][1];
+      return currentPattern[i][1];
     }
   }
 
